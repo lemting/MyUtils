@@ -17,10 +17,10 @@ import java.awt.Robot;
  * 		Color getPixelColor(int x, int y): 返回给定屏幕坐标处的像素颜色
  * 		Color getPixelColor(Point position): add
  * 		
- * 		void keyPress(int keycode): 按一个给定的键
+ * 		void keyPress(int keycode): 按一个给定的键 		//回车键: KeyEvent.VK_ENTER
  *		void keyRelease(int keycode): 释放给定的键
  *
- * 		void mouseMove(int x, int y): 将鼠标指针移动到给定的屏幕坐标
+ * 		void mouseMove(int x, int y): 将鼠标指针移动到给定的屏幕坐标	//鼠标左键: InputEvent.BUTTON1_DOWN_MASK
  * 		void mouseMove(Point position): add
  *		void mousePress(int buttons): 按一个或多个鼠标按钮
  *		void mouseRelease(int buttons): 释放一个或多个鼠标按钮
@@ -182,7 +182,7 @@ public class RobotUp
 	
 	/**
 	 * 键盘按下键,并在指定区间内随机的时间延迟下,释放键
-	 * @param keycode 按下的键
+	 * @param keycode 按下的键  eg: 回车键: KeyEvent.VK_ENTER
 	 * @param down 延迟时间的下限
 	 * @param up 延迟时间的上限
 	 */
@@ -195,7 +195,7 @@ public class RobotUp
 
 	/**
 	 * 鼠标按下键,并在指定区间内随机的时间延迟下,释放键
-	 * @param buttons 按下的键
+	 * @param buttons 按下的键	  eg: 鼠标左键: InputEvent.BUTTON1_DOWN_MASK
 	 * @param down 延迟时间的下限
 	 * @param up 延迟时间的上限
 	 */
@@ -242,16 +242,16 @@ public class RobotUp
 	
 	//获取指定位置的颜色
 	public static Color getPixelColor(int x,int y) {return robot.getPixelColor(x, y);}
-	//模拟键盘按下键
+	//模拟键盘按下键    eg: 回车键: KeyEvent.VK_ENTER
 	public static void keyPress(int keycode) {robot.keyPress(keycode);}
-	//模拟键盘释放键
+	//模拟键盘释放键	eg: 回车键: KeyEvent.VK_ENTER
 	public static void keyRelease(int keycode) {robot.keyRelease(keycode);}
-	//模拟鼠标移动
+	//模拟鼠标移动	
 	public static void mouseMove(int x,int y) {robot.mouseMove(x, y);}
 	public static void mouseMove(Point position) {robot.mouseMove(position.x, position.y);}
-	//模拟鼠标按下键
+	//模拟鼠标按下键	eg: 鼠标左键: InputEvent.BUTTON1_DOWN_MASK
 	public static void mousePress(int buttons) {robot.mousePress(buttons);}
-	//模拟鼠标释放键
+	//模拟鼠标释放键	eg: 鼠标左键: InputEvent.BUTTON1_DOWN_MASK
 	public static void mouseRelease(int buttons) {robot.mouseRelease(buttons);}
 	//模拟鼠标滚轮
 	public static void mouseWheel(int wheelAmt) {robot.mouseWheel(wheelAmt);} 
