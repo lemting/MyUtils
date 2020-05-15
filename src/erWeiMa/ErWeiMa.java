@@ -87,7 +87,7 @@ public class ErWeiMa
 			Map<DecodeHintType,Object> hints = new HashMap<>();
 			hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
 			result = formatReader.decode(binaryBitmap,hints);
-		}catch (NotFoundException | IOException e){System.out.println("解析失败!!!");e.printStackTrace();}
+		} catch (NotFoundException | IOException e){System.out.println("解析失败!!!");e.printStackTrace();}
 		if(result != null)
 		{
 			System.out.println(result.toString()); //输出结果

@@ -23,11 +23,11 @@ public class DaZhuZai_ShuaJi
 		List<Mainland> mainlands = MapPositionData.getMapPositionData();
 		Mainland tianLuo = mainlands.get(0);
 		//点击 [天罗大陆]
-		RobotUp.mouseMove(RobotOrigin.actualPosition(tianLuo.getPosition()));
+		RobotUp.mouseMove(RobotOrigin.addPosition(tianLuo.getPosition()));
 		RobotUp.mousePressAndRelease(InputEvent.BUTTON1_DOWN_MASK, 100, 300);
 		RobotUp.sleep(300,400);
 		//点击第一个地区 [大罗峰]
-		RobotUp.mouseMove(RobotOrigin.actualPosition(tianLuo.getRegions().get(0).getPosition()));
+		RobotUp.mouseMove(RobotOrigin.addPosition(tianLuo.getRegions().get(0).getPosition()));
 		RobotUp.mousePressAndRelease(InputEvent.BUTTON1_DOWN_MASK, 100, 300);
 		RobotUp.sleep(300,400);
 		int i = 0;
@@ -39,18 +39,18 @@ public class DaZhuZai_ShuaJi
 			for(Point p: region.getRegions())
 			{
 				//点击关卡
-				RobotUp.mouseMove(RobotOrigin.actualPosition(p));
+				RobotUp.mouseMove(RobotOrigin.addPosition(p));
 				RobotUp.mousePressAndRelease(InputEvent.BUTTON1_DOWN_MASK, 100, 300);
 				RobotUp.sleep(300,400);
 				//点击 [×] 关闭关卡
-				RobotUp.mouseMove(RobotOrigin.actualPosition(MapPositionData.getChaPoint()));
+				RobotUp.mouseMove(RobotOrigin.addPosition(MapPositionData.getChaPoint()));
 				RobotUp.mousePressAndRelease(InputEvent.BUTTON1_DOWN_MASK, 100, 300);
 				RobotUp.sleep(300,400);
 			}
 			if(i > 1)
 				break;
 			//点击 [下一地区]
-			RobotUp.mouseMove(RobotOrigin.actualPosition(MapPositionData.getNextPoint()));
+			RobotUp.mouseMove(RobotOrigin.addPosition(MapPositionData.getNextPoint()));
 			RobotUp.mousePressAndRelease(InputEvent.BUTTON1_DOWN_MASK, 100, 300);
 			RobotUp.sleep(300,400);
 		}
