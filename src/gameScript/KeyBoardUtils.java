@@ -27,13 +27,14 @@ import java.awt.event.KeyEvent;
  * 
  * void keyCombination(String comb, int key): 按下组合键, comb: 由 wcas 四种字符组成的字符串,代表需要按下的组合键(win,ctrl,alt,shift)
  * 
- * void pasteText(String text): 
+ * void paste(): 模拟按下 ctrl + v
+ * void pasteText(String text): 将文本复制到剪切板, 然后模拟按下 ctrl + v
  * 
  * void setClipboardString(String text)
  * String getClipboardString()
  *
  */
-public class KeyBoard {
+public class KeyBoardUtils {
 	
 	private static Robot robot;
 	private static int defaultDelay = 20;
@@ -45,6 +46,14 @@ public class KeyBoard {
 		catch (AWTException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 延时 delay 毫秒
+	 * @param delay
+	 */
+	public static void delay(int delay) {
+		robot.delay(delay);
 	}
 	
 	/**
@@ -60,7 +69,7 @@ public class KeyBoard {
 	 * @param defaultDelay
 	 */
 	public static void setDefaultDelay(int defaultDelay) {
-		KeyBoard.defaultDelay = defaultDelay;
+		KeyBoardUtils.defaultDelay = defaultDelay;
 	}
 
 	/**
@@ -148,11 +157,11 @@ public class KeyBoard {
 			return;
 		for(int key: keys) {
 			robot.keyPress(key);
-			robot.delay(delay);
+			delay(delay);
 		}
 		for(int i = keys.size() - 1; i >= 0;i--) {
 			robot.keyRelease(keys.get(i));
-			robot.delay(delay);
+			delay(delay);
 		}
 	}
 
@@ -166,11 +175,11 @@ public class KeyBoard {
 			return;
 		for(int key: keys) {
 			robot.keyPress(key);
-			robot.delay(delay);
+			delay(delay);
 		}
 		for(int i = keys.length - 1; i >= 0;i--) {
 			robot.keyRelease(keys[i]);
-			robot.delay(delay);
+			delay(delay);
 		}
 	}
 	
@@ -196,6 +205,13 @@ public class KeyBoard {
 		multipleKey(keys);
 	}
 	
+	/**
+	 * 模拟按下 ctrl + v
+	 * @param text
+	 */
+	public static void paste() {
+		keyCombination("c", KeyEvent.VK_V);
+	}
 	
 	/**
 	 * 将文本复制到剪切板, 然后模拟按下 ctrl + v
@@ -203,7 +219,7 @@ public class KeyBoard {
 	 */
 	public static void pasteText(String text) {
 		setClipboardString(text);
-		keyCombination("c", KeyEvent.VK_V);
+		paste();
 	}
 	
 	
