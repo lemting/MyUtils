@@ -1,6 +1,8 @@
 package gameScript;
 
 import java.awt.AWTException;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -8,6 +10,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import java.awt.event.KeyEvent;
@@ -17,21 +20,30 @@ import java.awt.event.KeyEvent;
  * @author Lemting
  * 
  * int getDefaultDelay(): 获取按键默认延迟
- * void getDefaultDelay(int defaultDelay): 设置按键默认延迟
+ * void setDefaultDelay(int defaultDelay): 设置按键默认延迟
  * 
  * void printText(String text): 模拟键盘打出文本(仅支持字母和键盘上的字符)	
+ * void printText(String text, int delay): 模拟键盘打出文本, 指定延迟(仅支持字母和键盘上的字符)	
  * 
  * void multipleKey(List<Integer> keys): 按下多个键
  * void multipleKey(List<Integer> keys, int delay): 按下多个键, 指定按键延迟
- * void multipleKey(int delay, int... keys): 按下多个键, 指定按键延迟
+ * void multipleKey(int delay, Integer... keys): 按下多个键, 指定按键延迟
+ * 
+ * void keyPressAndRelease(int key): 按下并释放按键
+ * void keyPressAndRelease(int key, int delay): 按下并释放按键, 指定延迟
  * 
  * void keyCombination(String comb, int key): 按下组合键, comb: 由 wcas 四种字符组成的字符串,代表需要按下的组合键(win,ctrl,alt,shift)
+ * void keyCombination(String comb, int key, int delay): 按下组合键, 指定延迟, comb: 由 wcas 四种字符组成的字符串,代表需要按下的组合键(win,ctrl,alt,shift)
  * 
  * void paste(): 模拟按下 ctrl + v
+ * void paste(int delay): 模拟按下 ctrl + v, 指定延迟
  * void pasteText(String text): 将文本复制到剪切板, 然后模拟按下 ctrl + v
+ * void pasteText(String text, int delay): 将文本复制到剪切板, 指定延迟, 然后模拟按下 ctrl + v
  * 
- * void setClipboardString(String text)
- * String getClipboardString()
+ * void setClipboardString(String text): 设置剪切板内容
+ * String getClipboardString(): 获取剪切板内容
+ * 
+ * Point mousePosition(): 获取鼠标位置
  *
  */
 public class KeyBoardUtils {
@@ -77,6 +89,14 @@ public class KeyBoardUtils {
 	 * @param text
 	 */
 	public static void printText(String text) {
+		printText(text, defaultDelay);
+	}
+	
+	/**
+	 * 模拟键盘打出文本, 指定延迟(仅支持字母和键盘上的字符)
+	 * @param text
+	 */
+	public static void printText(String text, int delay) {
 		if(text == null || text.length() == 0)
 			return;
 		for(char c: text.toCharArray()) {
@@ -133,7 +153,7 @@ public class KeyBoardUtils {
 				case '\n': key = KeyEvent.VK_ENTER; break;
 				case ' ': default: key = KeyEvent.VK_SPACE; System.err.println("error char: " + c); break;
 			}
-			keyCombination(shift?"s":null, key);
+			keyCombination(shift?"s":null, key, delay);
 		}
 	}
 	
@@ -170,17 +190,27 @@ public class KeyBoardUtils {
 	 * @param keys
 	 * @param delay
 	 */
-	public static void multipleKey(int delay, int... keys) {
+	public static void multipleKey(int delay, Integer... keys) {
 		if(keys == null || keys.length == 0)
 			return;
-		for(int key: keys) {
-			robot.keyPress(key);
-			delay(delay);
-		}
-		for(int i = keys.length - 1; i >= 0;i--) {
-			robot.keyRelease(keys[i]);
-			delay(delay);
-		}
+		multipleKey(Arrays.asList(keys), delay);
+	}
+	
+	/**
+	 * 按下并释放按键
+	 */
+	public static void keyPressAndRelease(int key) {
+		keyPressAndRelease(key, defaultDelay);
+	}
+	
+	/**
+	 * 按下并释放按键, 指定延迟
+	 */
+	public static void keyPressAndRelease(int key, int delay) {
+		robot.keyPress(key);
+		delay(delay);
+		robot.keyRelease(key);
+		delay(delay);
 	}
 	
 	/**
@@ -189,6 +219,15 @@ public class KeyBoardUtils {
 	 * @param key
 	 */
 	public static void keyCombination(String comb, int key) {
+		keyCombination(comb, key, defaultDelay);
+	}
+	
+	/**
+	 * 按下组合键, 指定延迟
+	 * @param comb 由 wcas 四种字符组成的字符串,代表需要按下的组合键(win,ctrl,alt,shift)
+	 * @param key
+	 */
+	public static void keyCombination(String comb, int key, int delay) {
 		List<Integer> keys = new ArrayList<Integer>();
 		if(comb != null && comb.length() > 0) {
 			for(char c: comb.toCharArray()) {
@@ -202,7 +241,7 @@ public class KeyBoardUtils {
 			}
 		}
 		keys.add(key);
-		multipleKey(keys);
+		multipleKey(keys, delay);
 	}
 	
 	/**
@@ -210,7 +249,15 @@ public class KeyBoardUtils {
 	 * @param text
 	 */
 	public static void paste() {
-		keyCombination("c", KeyEvent.VK_V);
+		paste(defaultDelay);
+	}
+	
+	/**
+	 * 模拟按下 ctrl + v, 指定延迟
+	 * @param text
+	 */
+	public static void paste(int delay) {
+		keyCombination("c", KeyEvent.VK_V, delay);
 	}
 	
 	/**
@@ -219,7 +266,16 @@ public class KeyBoardUtils {
 	 */
 	public static void pasteText(String text) {
 		setClipboardString(text);
-		paste();
+		paste(defaultDelay);
+	}
+	
+	/**
+	 * 将文本复制到剪切板, 指定延迟, 然后模拟按下 ctrl + v
+	 * @param text
+	 */
+	public static void pasteText(String text, int delay) {
+		setClipboardString(text);
+		paste(delay);
 	}
 	
 	
@@ -258,5 +314,14 @@ public class KeyBoardUtils {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 获取当前鼠标位置
+	 * @return
+	 */
+	public static Point mousePosition() {
+		Point now = MouseInfo.getPointerInfo().getLocation();
+		return now;
 	}
 }
