@@ -62,5 +62,46 @@ public class StringUtil {
         return new String(resource.getBytes(resourceCharSet), targetCharSet);
     }
 
+    /**
+     * 全角字符转半角字符
+     * @param fullWidthStr 全角字符
+     * @return 半角字符
+     */
+    public static String fullToHalf(String fullWidthStr) {
+        StringBuilder sb = new StringBuilder();
+        if (fullWidthStr != null && !fullWidthStr.isEmpty()) {
+            for (char c : fullWidthStr.toCharArray()) {
+                if (c == 0x3000) {
+                    sb.append((char) 0x0020);
+                } else if (c >= 0xff01 && c <= 0xff5e) {
+                    sb.append((char) (c - 0xfee0));
+                } else {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 半角字符转全角字符
+     * @param halfWidthStr 半角字符
+     * @return 全角字符
+     */
+    public static String halfToFull(String halfWidthStr) {
+        StringBuilder sb = new StringBuilder();
+        if (halfWidthStr != null && !halfWidthStr.isEmpty()) {
+            for (char c : halfWidthStr.toCharArray()) {
+                if (c == 0x0020) {
+                    sb.append((char) 0x3000);
+                } else if (c >= 0x0021 && c <= 0x007e) {
+                    sb.append((char) (c + 0xfee0));
+                } else {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
 
 }

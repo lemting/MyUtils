@@ -109,6 +109,21 @@ public class KeyBoardUtilTest {
 	public static void main(String[] args) {
 		//KeyBoardUtils.printText("`1234567890-=[]\\;',./~!@#$%^&*()_+{}|:\"<>?qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXVBNM");
 		//sqrt(3) = 1.7320508075688772935274463415058723669428052538103806280558069794519330169088000370811
-		sqrt(3);
+		number();
+	}
+
+	public static void number() {
+		System.out.println("开始: 1,2,3,4,5,...");
+		KeyBoardUtil.delay(3000);
+		long i = 1L;
+		while(true) {
+			KeyBoardUtil.pasteText("" + i++);
+			KeyBoardUtil.keyPressAndRelease(KeyEvent.VK_ENTER);
+			KeyBoardUtil.delay(100);
+			Point p = KeyBoardUtil.mousePosition();
+			if(p.x < 10 && p.y < 10)
+				break;
+		}
+		System.out.println("结束: 最后输出 " + i);
 	}
 }
