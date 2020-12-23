@@ -28,6 +28,13 @@
             <artifactId>javase</artifactId>
             <version>3.4.0</version>
         </dependency>
+
+        <!-- dom4j -->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
     </dependencies>
 
     <build>
