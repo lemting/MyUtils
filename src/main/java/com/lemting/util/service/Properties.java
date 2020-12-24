@@ -8,10 +8,11 @@ import org.dom4j.io.SAXReader;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Date;
 
 public class Properties /* implements InitializingBean */ {
 
@@ -27,7 +28,7 @@ public class Properties /* implements InitializingBean */ {
     }
 
     public static void initProperties() {
-        String path = "D:\\Hundsun\\Code\\test\\src\\main\\resources\\properties.xml";
+        String path = "src/main/resources/properties.xml";
         properties = readXml(path);
     }
 
@@ -144,6 +145,12 @@ public class Properties /* implements InitializingBean */ {
         }
         return map;
     }
+
+    public static Comparator<Map<String, String>> propertyComparator = (property1, property2) -> {
+        String a = property1 != null && property1.get("name") != null ? property1.get("name") : "";
+        String b = property2 != null && property2.get("name") != null ? property2.get("name") : "";
+        return a.compareTo(b);
+    };
 
 //    @Override
 //    public void afterPropertiesSet() throws Exception {
