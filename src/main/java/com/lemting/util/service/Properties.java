@@ -121,6 +121,7 @@ public class Properties /* implements InitializingBean */ {
             Document document = saxreader.read(new File(path));
             Element root = document.getRootElement();
             Iterator<Element> iterator = root.elementIterator("property");
+            int i = 0;
             while (iterator.hasNext()) {
                 Element property = iterator.next();
                 Map<String, String> propertyMap = new HashMap<>();
@@ -133,23 +134,32 @@ public class Properties /* implements InitializingBean */ {
                     propertyMap.put("info", info == null ? "" : info);
                     propertyMap.put("value", value == null ? "" : value);
                     propertyMap.put("detail", detail == null ? "" : detail);
+                    String order = property.attributeValue("order");
+                    order = "" + (order != null && !order.isEmpty() ? Integer.parseInt(order) : i);
+                    propertyMap.put("order", order);
                     map.put(name, propertyMap);
+                    i++;
                 }
             }
             long end = System.currentTimeMillis();
             System.err.printf("%s 结束读取配置文件[%s], 解析时间[%d]ms\n", getTime(), path, end - start);
             return map;
-        } catch (DocumentException e) {
-            System.err.printf("%s 读取配置文件[%s]出错\n", getTime(), path);
+        } catch (Exception e) {
+            System.err.printf("%s 读取配置文件[%s]出错, %s\n", getTime(), path, e.getMessage());
             e.printStackTrace();
         }
         return map;
     }
 
     public static Comparator<Map<String, String>> propertyComparator = (property1, property2) -> {
-        String a = property1 != null && property1.get("name") != null ? property1.get("name") : "";
-        String b = property2 != null && property2.get("name") != null ? property2.get("name") : "";
-        return a.compareTo(b);
+        int orderA = property1.get("order") != null && property1.get("order").matches("(\\-)?[\\d]{1,9}") ? Integer.parseInt(property1.get("order")) : Integer.MAX_VALUE;
+        int orderB = property2.get("order") != null && property2.get("order").matches("(\\-)?[\\d]{1,9}") ? Integer.parseInt(property2.get("order")) : Integer.MAX_VALUE;
+        if (orderA == orderB) {
+            String a = property1 != null && property1.get("name") != null ? property1.get("name") : "";
+            String b = property2 != null && property2.get("name") != null ? property2.get("name") : "";
+            return a.compareTo(b);
+        }
+        return orderA - orderB;
     };
 
 //    @Override

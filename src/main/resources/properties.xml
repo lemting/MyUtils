@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <properties>
-    <property info="这是aaa" name="aaa" value="true">true: xxxx; false: xxxx</property>
+    <property info="这是aaa" name="aaa" value="true" order="3">true: xxxx; false: xxxx</property>
+    <property info="这是bbb" name="bbb" value="false" >true: xxxx; false: xxxx</property>
+    <property info="这是ccc" name="ccc" value="yes" order="-1">true: xxxx; false: xxxx</property>
 </properties>
