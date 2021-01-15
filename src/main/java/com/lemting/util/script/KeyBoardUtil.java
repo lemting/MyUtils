@@ -20,28 +20,30 @@ import java.awt.event.KeyEvent;
  * 
  * @author Lemting
  * 
- * int getDefaultDelay(): 获取按键默认延迟 void setDefaultDelay(int defaultDelay): 设置按键默认延迟
+ * int getDefaultDelay(): 获取按键默认延迟
+ * void setDefaultDelay(int defaultDelay): 设置按键默认延迟
  * 
  * void delay(int delay): 延时 delay 毫秒
  * 
- * void printText(String text): 模拟键盘打出文本(仅支持字母和键盘上的字符) void
- * printText(String text, int delay): 模拟键盘打出文本, 指定延迟(仅支持字母和键盘上的字符)
+ * void printText(String text): 模拟键盘打出文本(仅支持字母和键盘上的字符)
+ * void printText(String text, int delay): 模拟键盘打出文本, 指定延迟(仅支持字母和键盘上的字符)
  * 
- * void multipleKey(List<Integer> keys): 按下多个键 void
- * multipleKey(List<Integer> keys, int delay): 按下多个键, 指定按键延迟 void
- * multipleKey(int delay, Integer... keys): 按下多个键, 指定按键延迟
+ * void multipleKey(List<Integer> keys): 按下多个键
+ * void multipleKey(List<Integer> keys, int delay): 按下多个键, 指定按键延迟
+ * void multipleKey(int delay, Integer... keys): 按下多个键, 指定按键延迟
  * 
- * void keyPressAndRelease(int key): 按下并释放按键 void keyPressAndRelease(int key, int delay): 按下并释放按键, 指定延迟
+ * void keyPressAndRelease(int key): 按下并释放按键
+ * void keyPressAndRelease(int key, int delay): 按下并释放按键, 指定延迟
  * 
  * void keyCombination(String comb, int key): 按下组合键, comb: 由 wcas 四种字符组成的字符串,代表需要按下的组合键(win,ctrl,alt,shift) 
  * void keyCombination(String comb, int key, int delay): 按下组合键, 指定延迟, comb: 由 wcas 四种字符组成的字符串,代表需要按下的组合键(win,ctrl,alt,shift)
  * 
  * void paste(): 模拟按下 ctrl + v void paste(int delay): 模拟按下 ctrl + v, 指定延迟 
- * void pasteText(String text): 将文本复制到剪切板, 然后模拟按下 ctrl + v void
- * pasteText(String text, int delay): 将文本复制到剪切板, 指定延迟, 然后模拟按下 ctrl + v
+ * void pasteText(String text): 将文本复制到剪切板, 然后模拟按下 ctrl + v
+ * void pasteText(String text, int delay): 将文本复制到剪切板, 指定延迟, 然后模拟按下 ctrl + v
  * 
- * void setClipboardString(String text): 设置剪切板内容 String
- * getClipboardString(): 获取剪切板内容
+ * void setClipboardString(String text): 设置剪切板内容
+ * String getClipboardString(): 获取剪切板内容
  * 
  * Point mousePosition(): 获取鼠标位置
  * void mouseMove(Point point): 鼠标移动
