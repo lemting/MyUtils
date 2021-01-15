@@ -20,8 +20,7 @@ import java.awt.event.KeyEvent;
  * 
  * @author Lemting
  * 
- * int getDefaultDelay(): 获取按键默认延迟 void setDefaultDelay(int
- * defaultDelay): 设置按键默认延迟
+ * int getDefaultDelay(): 获取按键默认延迟 void setDefaultDelay(int defaultDelay): 设置按键默认延迟
  * 
  * void delay(int delay): 延时 delay 毫秒
  * 
@@ -45,6 +44,8 @@ import java.awt.event.KeyEvent;
  * getClipboardString(): 获取剪切板内容
  * 
  * Point mousePosition(): 获取鼠标位置
+ * void mouseMove(Point point): 鼠标移动
+ * void mouseMove(int x, int y): 鼠标移动
  *
  */
 public class KeyBoardUtil {
@@ -266,8 +267,7 @@ public class KeyBoardUtil {
 
 	/**
 	 * 模拟按下 ctrl + v
-	 * 
-	 * @param text
+	 *
 	 */
 	public static void paste() {
 		paste(defaultDelay);
@@ -276,7 +276,6 @@ public class KeyBoardUtil {
 	/**
 	 * 模拟按下 ctrl + v, 指定延迟
 	 * 
-	 * @param text
 	 */
 	public static void paste(int delay) {
 		keyCombination("c", KeyEvent.VK_V, delay);
@@ -348,5 +347,22 @@ public class KeyBoardUtil {
 	public static Point mousePosition() {
 		Point now = MouseInfo.getPointerInfo().getLocation();
 		return now;
+	}
+
+	/**
+	 * 鼠标移动
+	 * @param point
+	 */
+	public static void mouseMove(Point point) {
+		mouseMove((int)point.getX(), (int)point.getY());
+	}
+
+	/**
+	 * 鼠标移动
+	 * @param x
+	 * @param y
+	 */
+	public static void mouseMove(int x, int y) {
+		robot.mouseMove(x, y);
 	}
 }
